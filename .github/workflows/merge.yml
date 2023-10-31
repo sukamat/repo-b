@@ -1,0 +1,39 @@
+name: Merge to Repo B
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Repo A
+        uses: actions/checkout@v2
+        with:
+          ref: main
+
+      - name: Set up Git
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+
+      - name: Merge changes to Repo B
+        run: |
+          # Check if there are any changes in .github folder or fstab.yaml file
+          git diff --exit-code -- . ':!.github' ':!fstab.yaml'
+          CHANGES=$?
+
+          if [ $CHANGES -ne 0 ]; then
+            echo "There are changes in .github folder or fstab.yaml file. Ignoring merge to Repo B."
+          else
+            git remote add repo-b https://github.com/sukamat/repo-b.git
+            git fetch repo-b main
+            git checkout -b temp-branch
+            git merge repo-b/main
+            git push origin temp-branch
+            hub pull-request -m "Merge changes from Repo A to Repo B"
+          fi
