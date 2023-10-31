@@ -1,0 +1,48 @@
+name: Merge Changes from Repo-A to Repo-B
+
+on:
+  push:
+    branches:
+      - main # Trigger the workflow when there are new commits on the main branch of repo-a
+
+jobs:
+  merge_changes:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repo-b
+      uses: actions/checkout@v2 # Check out the code of repo-b
+
+    - name: Check out repo-a
+      uses: actions/github-script@v5 # Use GitHub Script to perform custom actions
+      with:
+        github-token: ${{ secrets.GH_PAT }}
+        script: |
+          const fs = require('fs');
+          const path = 'sukamat/repo-a';
+          const ignorePaths = ['.github', 'fstab.yaml'];
+
+          // Get the list of changed files from the push event payload
+          const changedFiles = process.env.GITHUB_EVENT_PATH
+            ? JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8')).commits[0].added.concat(
+                JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8')).commits[0].modified
+              )
+            : [];
+          // log changed files as a string
+          console.log('CHANGED FILES: ', changedFiles.join(', '));
+
+          // Check if any changed file is within the ignored paths
+          const shouldMerge = changedFiles.every(file => !ignorePaths.some(path => file.startsWith(path)));
+          console.log('SHOULD MERGE: ', shouldMerge);
+
+          // If changes are not within ignored paths, merge them into repo-b
+          if (shouldMerge) {
+            const { execSync } = require('child_process');
+            execSync(`git remote add repo-a https://github.com/sukamat/repo-a.git`);
+            execSync(`git fetch repo-a`);
+            execSync(`git merge repo-a/main --no-commit --no-ff`);
+            execSync(`git commit -m "Merge changes from repo-a"`);
+            execSync(`git push origin main`);
+          } else {
+            console.log('shouldMerge was false);
+          }
