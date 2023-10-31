@@ -31,9 +31,9 @@ jobs:
             echo "There are changes in .github folder or fstab.yaml file. Ignoring merge to Repo B."
           else
             git remote add repo-b https://github.com/sukamat/repo-b.git
-            git fetch repo-b main --allow-unrelated-histories
+            git fetch repo-b main
             git checkout -b temp-branch
-            git merge repo-b/main
+            git merge --allow-unrelated-histories repo-b/main
             git push origin temp-branch
             hub pull-request -m "Merge changes from Repo A to Repo B"
           fi
