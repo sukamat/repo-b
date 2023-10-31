@@ -35,7 +35,7 @@ jobs:
 
             # Attempt to merge changes from repo-b/main into temp-branch
             git checkout -b temp-branch
-            git merge repo-b/main
+            git merge --allow-unrelated-histories repo-b/main
 
             # Check for merge conflicts
             CONFLICTS=$(git ls-files -u)
