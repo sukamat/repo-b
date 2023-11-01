@@ -38,9 +38,7 @@ jobs:
           cat output.txt
       
       - name: run sync.py
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+        run: |          
           python .github/scripts/sync.py
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}

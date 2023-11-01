@@ -32,6 +32,8 @@ destination_commits = set(commit.sha for commit in destination_repo.get_commits(
 
 # Find the difference between the two repositories
 new_commits = source_commits - destination_commits
+# print new_commits
+print(f'New commits: {len(new_commits)}')
 
 if new_commits:
     # Create a pull request in the destination repository
