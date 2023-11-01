@@ -42,6 +42,7 @@ jobs:
           python .github/scripts/sync.py
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
+          TEMP_VAR: ${{ vars.TEMP_VAR }}
 
     #   - name: commit files
     #     run: |
