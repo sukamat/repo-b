@@ -7,7 +7,7 @@ destination_repo_name = 'repo-b'
 organization_name = 'sukamat'
 
 # Read GitHub access token from GitHub Secrets
-access_token = os.environ.get('GH_TOKEN')
+access_token = os.environ.get('GH_TOKEN_ALL')
 if access_token is None:
     raise ValueError('GitHub access token is not set')
 

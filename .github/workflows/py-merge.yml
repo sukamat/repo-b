@@ -41,6 +41,8 @@ jobs:
         run: |          
           python .github/scripts/sync.py
         env:
+          GH_TOKEN_ALL: ${{ secrets.GH_PAT_ALL }}
+          GH_TOKEN_FINE: ${{ secrets.GH_PAT_FINE }}
           GH_TOKEN: ${{ secrets.GH_PAT }}
           TEMP_VAR: ${{ vars.TEMP_VAR }}
 
