@@ -31,7 +31,7 @@ jobs:
       - name: execute py script 
         run: | 
             pwd
-            python script.py
+            python .github/scripts/script.py
 
       - name: print output.txt
         run: |
