@@ -24,7 +24,7 @@ jobs:
     #       pip install -r requirements.txt
 
       - name: execute py script 
-        run: python script.py
+        run: python repo-a/script.py
 
     #   - name: commit files
     #     run: |
