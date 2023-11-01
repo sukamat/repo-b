@@ -24,10 +24,14 @@ jobs:
     #       pip install -r requirements.txt
     
       - name: current directory
-        run: pwd
+        run: |
+            pwd
+            ls -la
 
       - name: execute py script 
-        run: python repo-a/script.py
+        run: | 
+            pwd
+            python script.py
 
     #   - name: commit files
     #     run: |
