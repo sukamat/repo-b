@@ -1,9 +1,9 @@
 name: run py-merge
 
 on:
-    push:
-      branches:
-        - main
+  push:
+    branches:
+      - main
 
 jobs:
   build:
