@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    #   - name: checkout repo content
-    #     uses: actions/checkout@v2 # checkout the repository content
+      - name: checkout repo content
+        uses: actions/checkout@v2 # checkout the repository content
 
       - name: setup python
         uses: actions/setup-python@v4
@@ -32,6 +32,10 @@ jobs:
         run: | 
             pwd
             python script.py
+
+      - name: print output.txt
+        run: |
+            cat output.txt
 
     #   - name: commit files
     #     run: |
