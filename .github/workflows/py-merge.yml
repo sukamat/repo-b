@@ -23,19 +23,25 @@ jobs:
     #       python -m pip install --upgrade pip
     #       pip install -r requirements.txt
     
-      - name: current directory
-        run: |
-            pwd
-            ls -la
+      # - name: current directory
+      #   run: |
+      #       pwd
+      #       ls -la
 
       - name: execute py script 
         run: | 
-            pwd
-            python .github/scripts/script.py
+          pwd
+          python .github/scripts/script.py
 
       - name: print output.txt
         run: |
-            cat output.txt
+          cat output.txt
+      
+      - name: run sync.py
+        run: |
+          python .github/scripts/sync.py
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
 
     #   - name: commit files
     #     run: |
